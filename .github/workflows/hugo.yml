@@ -20,6 +20,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          submodules: recursive  # <--- THIS pulls the theme files into the runner
+          fetch-depth: 0
 
       - name: Setup Go
         uses: actions/setup-go@v7
