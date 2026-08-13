@@ -1,13 +1,4 @@
-[exec]
-  allow = [
-    '^gohugoio',
-    '^python$',
-    '^go$',
-    '^npx$',
-    '^postcss$',
-    '^tailwindcss$'
-  ]
-
+[node]
 [node.permissions]
   allowAddons = ["tailwindcss"]
   allowChildProcess = ["tailwindcss"]
