@@ -1,6 +1,15 @@
-[node]
-  [node.permissions]
-    allowAddons = ["tailwindcss"]
-    allowChildProcess = ["tailwindcss"]
-    allowRead = [".", "..", "/"]
-    allowWorker = ["tailwindcss"]
+[exec]
+  allow = [
+    '^gohugoio',
+    '^python$',
+    '^go$',
+    '^npx$',
+    '^postcss$',
+    '^tailwindcss$'
+  ]
+
+[node.permissions]
+  allowAddons = ["tailwindcss"]
+  allowChildProcess = ["tailwindcss"]
+  allowRead = [".", "..", "/"]
+  allowWorker = ["tailwindcss"]
