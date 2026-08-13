@@ -24,6 +24,18 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Tailwind CSS & Tooling
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+          fi
+          npm install -g tailwindcss postcss autoprefixer
+
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
@@ -37,7 +49,6 @@ jobs:
 
       - name: Build site
         env:
-          # Geeft Hugo toestemming om Tailwind/PostCSS uit te voeren in de CI-omgeving.
           HUGO_SECURITY_EXEC_ALLOW: '.*'
           HUGO_ENVIRONMENT: production
         run: hugo --minify --baseURL "https://www.madebyjm.com/"
