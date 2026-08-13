@@ -7,8 +7,12 @@
 	"features": {
 		"ghcr.io/devcontainers/features/go:1": {},
 		"ghcr.io/devcontainers/features/hugo:1": {},
-		"ghcr.io/stu-bell/devcontainer-features/node:0": {}
-	}
+		// Node >= 22.5 nodig: Hugo start de Tailwind CLI met `node --permission`
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "22"
+		}
+	},
+	"postCreateCommand": "git submodule update --init --recursive && npm --prefix themes/bigspring-light-hugo install --legacy-peer-deps && mkdir -p node_modules/.bin && ln -sf ../../themes/bigspring-light-hugo/node_modules/@tailwindcss/cli/dist/index.mjs node_modules/.bin/tailwindcss",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
