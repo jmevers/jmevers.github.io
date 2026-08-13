@@ -29,23 +29,22 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Tailwind CSS CLI
+      - name: Install Tailwind CSS (Node.js Script)
         run: |
-          # 1. Download de officiële standalone Tailwind CLI binary
-          curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64
-          chmod +x tailwindcss-linux-x64
-          sudo mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
+          # 1. Installeer Tailwind CSS wereldwijd via NPM (maakt een Node script aan)
+          npm install -g tailwindcss postcss autoprefixer
 
-          # 2. Installeer eventuele NPM-afhankelijkheden uit je project of thema
+          # 2. Maak een symlink van het NPM Node script naar /usr/local/bin/tailwindcss
+          TAILWIND_SCRIPT=$(which tailwindcss)
+          sudo ln -sf "$TAILWIND_SCRIPT" /usr/local/bin/tailwindcss
+
+          # 3. Installeer eventuele thema- plugins (zoals @tailwindcss/typography)
           if [ -f package.json ]; then
             npm ci || npm install
           fi
           if [ -f themes/bigspring-light-hugo/package.json ]; then
             npm --prefix themes/bigspring-light-hugo install
           fi
-
-          # 3. Voeg lokale bin mappen toe aan PATH
-          echo "$GITHUB_WORKSPACE/node_modules/.bin" >> $GITHUB_PATH
 
       - name: Setup Go
         uses: actions/setup-go@v5
