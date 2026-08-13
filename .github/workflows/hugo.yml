@@ -27,11 +27,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'  # <--- Geüpdatet naar Node 22 voor Hugo --permission ondersteuning
 
       - name: Install Tailwind CSS v3 & Dependencies
         run: |
-          # 1. Installeer Tailwind CSS v3 wereldwijd (dit is het Node script dat Hugo verwacht)
+          # 1. Installeer Tailwind CSS v3 wereldwijd
           npm install -g tailwindcss@3 postcss autoprefixer --legacy-peer-deps
 
           # 2. Voeg de globale npm binary map toe aan het GITHUB_PATH
