@@ -29,21 +29,24 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Tailwind CSS (Node.js Script)
+      - name: Install Tailwind CSS v3 & Dependencies
         run: |
-          # 1. Installeer Tailwind CSS wereldwijd via NPM (maakt een Node script aan)
-          npm install -g tailwindcss postcss autoprefixer
+          # 1. Installeer Tailwind CSS v3 wereldwijd (dit is het Node script dat Hugo verwacht)
+          npm install -g tailwindcss@3 postcss autoprefixer --legacy-peer-deps
 
-          # 2. Maak een symlink van het NPM Node script naar /usr/local/bin/tailwindcss
-          TAILWIND_SCRIPT=$(which tailwindcss)
-          sudo ln -sf "$TAILWIND_SCRIPT" /usr/local/bin/tailwindcss
+          # 2. Voeg de globale npm binary map toe aan het GITHUB_PATH
+          echo "$(npm config get prefix)/bin" >> $GITHUB_PATH
 
-          # 3. Installeer eventuele thema- plugins (zoals @tailwindcss/typography)
+          # 3. Installeer afhankelijkheden van het hoofdproject (indien aanwezig)
           if [ -f package.json ]; then
-            npm ci || npm install
+            npm install --legacy-peer-deps
+            echo "$GITHUB_WORKSPACE/node_modules/.bin" >> $GITHUB_PATH
           fi
+
+          # 4. Installeer afhankelijkheden van het thema (indien aanwezig)
           if [ -f themes/bigspring-light-hugo/package.json ]; then
-            npm --prefix themes/bigspring-light-hugo install
+            npm --prefix themes/bigspring-light-hugo install --legacy-peer-deps
+            echo "$GITHUB_WORKSPACE/themes/bigspring-light-hugo/node_modules/.bin" >> $GITHUB_PATH
           fi
 
       - name: Setup Go
