@@ -19,13 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
-          submodules: recursive  # <--- THIS pulls the theme files into the runner
+          submodules: recursive
           fetch-depth: 0
 
       - name: Setup Go
-        uses: actions/setup-go@v7
+        uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
 
@@ -36,6 +36,10 @@ jobs:
           extended: true
 
       - name: Build site
+        env:
+          # Geeft Hugo toestemming om Tailwind/PostCSS uit te voeren in de CI-omgeving
+          HUGO_SECURITY_EXEC_ALLOW: '.*'
+          HUGO_ENVIRONMENT: production
         run: hugo --minify --baseURL "https://www.madebyjm.com/"
 
       - name: Upload artifact
