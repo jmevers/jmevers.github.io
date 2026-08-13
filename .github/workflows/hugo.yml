@@ -37,7 +37,7 @@ jobs:
 
       - name: Build site
         env:
-          # Geeft Hugo toestemming om Tailwind/PostCSS uit te voeren in de CI-omgeving
+          # Geeft Hugo toestemming om Tailwind/PostCSS uit te voeren in de CI-omgeving.
           HUGO_SECURITY_EXEC_ALLOW: '.*'
           HUGO_ENVIRONMENT: production
         run: hugo --minify --baseURL "https://www.madebyjm.com/"
